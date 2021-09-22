@@ -1,0 +1,756 @@
+
+\documentclass{report}
+
+\usepackage[landscape,margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage[none]{hyphenat}
+\usepackage{color}
+\usepackage{flowfram}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=0 136 255,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\definecolor{grey}{rgb}{0.8, 0.8, 0.8}
+\definecolor{greybleed}{rgb}{0.15, 0.15, 0.15}
+
+\usepackage{fontspec}
+\setmainfont{RingsideNarrow}[
+    Extension      = .otf ,
+	Path           = ../fonts/ ,
+    UprightFont    = *-Book ,
+    BoldFont       = *-Bold ,
+    ItalicFont     = *-BookItalic ,
+    BoldItalicFont = *-BoldItalic ]
+
+\usepackage{graphicx}
+\graphicspath{ {../images/} }
+
+\usepackage[export]{adjustbox}
+
+\usepackage{svg}
+\svgpath{ {../images/} }
+
+
+\adjustheight{\textheight}
+
+% frames have 4 params:
+% {width}{height}{x}{y}
+
+% subsequent pages [>0]
+
+\newcommand{\env}[1]{\texttt{#1}}
+\newcommand{\cmdname}[1]{\texttt{\symbol{92}#1}}
+\newcommand{\meta}[1]{\textnormal{\textless\textit{#1}\textgreater}}
+
+% blue accents
+\newstaticframe[>0]{30pt}{42pt}{-0.5in}{0.961\textheight}[accent1]
+\setstaticcontents*{accent1}{ %
+    \includegraphics[width=42pt,height=9pt,angle=-90]{accent.png}}
+\newstaticframe[>0]{42pt}{20pt}{0.694\textwidth}{51.2pt}[accent2]
+\setstaticcontents*{accent2}{\hfill %
+    \includegraphics[width=42pt,height=7pt]{accent.png}}
+
+% grey bleed box
+\newstaticframe[>0]{0.5\textwidth}{0.92\textheight}{0.66\textwidth}{0.12\textheight}[greybox]
+\setstaticframe*{greybox}{backcolor=greybleed}
+
+% logo
+\newstaticframe[>0]{0.5\textwidth}{20pt}{2pt}{\textheight}[logo]
+\setstaticcontents*{logo}{ %
+    \raisebox{-1pt}{\includegraphics{adkom.pdf}}}
+    
+% chapter headings (sign IDs)
+\newdynamicframe[>0]{1.015\textwidth}{20pt}{0pt}{462pt}[signid]
+
+\dfchaphead*{signid}
+
+\renewcommand{\DFchapterstyle}[1]{\hfill %
+\raggedleft{\textcolor{white}{\MakeUppercase{#1}}}}
+
+\pagestyle{empty}
+
+\renewcommand{\chapterfirstpagestyle}{empty}
+
+% footer
+\newdynamicframe[>0]{\textwidth}{\headheight}{0pt}{-0.5\footskip}[footer]
+
+\setdynamiccontents*{footer}{\hfill\thepage}
+
+\newcommand{\detailsecheading}[1]{\LARGE{#1}}
+\newcommand{\subheading}[1]{\fontsize{8pt}{9.6pt}\textbf{\MakeUppercase{#1}}}
+\newcommand{\detailheading}[1]{\textcolor{grey}{\subheading{#1}}}
+\newcommand{\signstat}[1]{\textcolor{grey}{\fontsize{8pt}{9.6pt}\textbf{#1}}}
+\newcommand*{\shifttext}[2]{%
+  \settowidth{\@tempdima}{#2}%
+  \makebox[\@tempdima]{\hspace*{#1}#2}%
+}
+
+\newcommand{\staticdetailframe}[2]{\newstaticframe[>0]{175pt}{12pt}{565pt}{#1}[#2]}
+\newcommand{\dynamicdetailframe}[2]{\newdynamicframe[>0]{185pt}{12pt}{586pt}{#1}[#2]}
+\newcommand{\setdynamicdetails}[2]{\setdynamiccontents*{#1}{\textcolor{white}{\textbf{#2}}}}
+
+
+% Sign Details
+\newstaticframe[>0]{\textwidth}{24pt}{558pt}{468pt}[sign_details]
+\setstaticcontents*{sign_details}{\detailsecheading{\textcolor{grey}{Sign Details}}}
+\newstaticframe[>0]{\textwidth}{0.5pt}{558pt}{468.5pt}[hr1]
+\setstaticcontents*{hr1}{\includegraphics[trim=0 0 1475pt 0,clip,width=175pt,height=0.5pt]{hr2.png}}
+
+
+% 4 week impressions
+\staticdetailframe{440pt}{impression_heading}
+\setstaticcontents*{impression_heading}{
+    \raisebox{-2pt}{\includegraphics{impressions.pdf}}\hspace{5pt}
+    \detailheading{4 week impressions}}
+\dynamicdetailframe{428.5pt}{impressions}
+
+% Geopath ID
+\staticdetailframe{394pt}{geopath_id_heading}
+\setstaticcontents*{geopath_id_heading}{
+    \hspace{2pt}\raisebox{-3pt}{\includegraphics{geopath.pdf}}\hspace{7.5pt}
+    \detailheading{Geopath ID}}
+\dynamicdetailframe{382.5pt}{geopath_id}
+
+% 4 week price
+\staticdetailframe{348pt}{price_heading}
+\setstaticcontents*{price_heading}{
+    \hspace{2.25pt}\raisebox{-5pt}{\includegraphics{price.pdf}}\hspace{9.25pt}
+    \detailheading{4 week price}}
+\dynamicdetailframe{336.5pt}{price}
+
+% Media Type
+\staticdetailframe{302pt}{type_heading}
+\setstaticcontents*{type_heading}{
+    \raisebox{-4pt}{\includegraphics{type.pdf}}\hspace{7pt}
+    \detailheading{media type}}
+\dynamicdetailframe{290.5pt}{type}
+
+% Size
+\staticdetailframe{256pt}{size_heading}
+\setstaticcontents*{size_heading}{
+    \hspace{-1pt}\raisebox{-2pt}{\includegraphics{size.pdf}}\hspace{6pt}
+    \detailheading{Size}}
+\dynamicdetailframe{244.5pt}{size}
+
+% Zip Code
+\staticdetailframe{210pt}{zip_heading}
+\setstaticcontents*{zip_heading}{
+    \hspace{-2pt}\raisebox{-3pt}{\includegraphics{zipcode.pdf}}\hspace{5pt}
+    \detailheading{Zip Code}}
+\dynamicdetailframe{198.5pt}{zip}
+
+% Market
+\staticdetailframe{164pt}{market_heading}
+\setstaticcontents*{market_heading}{
+    \raisebox{-3pt}{\includegraphics{market.pdf}}\hspace{6pt}
+    \detailheading{Market}}
+\dynamicdetailframe{152.5pt}{market}
+
+% Read
+\staticdetailframe{118pt}{read_heading}
+\setstaticcontents*{read_heading}{
+    \raisebox{-5pt}{\includegraphics{read.pdf}}\hspace{5pt}
+    \detailheading{Read}}
+\dynamicdetailframe{108.5pt}{read}
+
+
+% Location Information
+%\newstaticframe[>0]{\textwidth}{24pt}{0pt}{170pt}[location_info]\LARGE
+\newstaticframe[>0]{\textwidth}{24pt}{0pt}{130pt}[location_info]\LARGE
+\setstaticcontents*{location_info}{Location Information}
+\newstaticframe[>0]{\textwidth}{0.5pt}{0pt}{131pt}[hr2]
+\setstaticcontents*{hr2}{\includegraphics[width=0.75\textwidth,height=0.5pt]{hr2.png}}
+
+% Lat/Lon
+\newstaticframe[>0]{200pt}{12pt}{0pt}{111pt}[latlon_heading]\raggedright
+\setstaticcontents*{latlon_heading}{
+    \raisebox{-4pt}{\includegraphics{latlon.pdf}}\hspace{1pt}
+    \subheading{Lat \& Lon / Google Maps Link}}
+\newdynamicframe[>0]{0.9\textwidth}{12pt}{17pt}{93pt}[latlon]\raggedright
+\newdynamicframe[>0]{0.9\textwidth}{12pt}{17pt}{81pt}[poi]\raggedright
+
+% Location
+\newstaticframe[>0]{200pt}{12pt}{0pt}{51pt}[location_heading]\raggedright
+\setstaticcontents*{location_heading}{
+    \raisebox{-6pt}{\includegraphics{location.pdf}}\hspace{2.5pt}
+    \subheading{Location}}
+\newdynamicframe[>0]{200pt}{12pt}{17pt}{33pt}[location]\raggedright
+
+% description
+\newflowframe[>0]{0.60\textwidth}{60pt}{17pt}{-12pt}
+
+% photo frame
+\newdynamicframe[>0]{0.75\textwidth}{0.63\textheight}{0pt}{0.33\textheight}[photo]
+
+
+% frames have 4 params:
+% {width}{height}{x}{y}
+
+
+% ---------------------------------------------------------------------------
+
+
+\begin{document}
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{1pt}
+
+\setcounter{page}{1} % set the page number to anything you like
+
+\chapter{TX-38508}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-g2rvnj-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{2,702,000}
+\setdynamicdetails{price}{2,563}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{12.0\textquotesingle~×~40.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78666}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=29.82205392,-97.99275444}{29.82205392, -97.99275444}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of San Marcos, North facing, located at W/S of I-35, .6 of a mile S/o Centerpoint Dr.    (Mile Post 200) 4610 S. Interstate 35. San Marcos, Texas, N/F
+
+\chapter{TX-38456}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-7pkfa9-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{1,069,600}
+\setdynamicdetails{price}{1,775}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{15.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78653}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.34885815,-97.5399794}{30.34885815, -97.5399794}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Manor, West facing, located at S/S of Hwy 290 East, 385 feet W/o FM 973., W/F
+
+\chapter{TX-38463}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-khf89f-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{826,000}
+\setdynamicdetails{price}{1,380}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78612}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.14271543,-97.47525344}{30.14271543, -97.47525344}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Cedar Creek, East facing, located at S/S of Hwy 71. .3 miles w/o Pope Bend Rd., E/F
+
+\chapter{TX-38808}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-7e93cu-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{674,800}
+\setdynamicdetails{price}{690}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{10.0\textquotesingle~×~32.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{76578}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.59125185,-97.30003502}{30.59125185, -97.30003502}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Thrall, East facing, located at N/S of Hwy 79, 225 feet W/o Waterworks Rd. Thrall, Texas, E/F
+
+\chapter{TX-38802}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-qyx9gq-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{630,000}
+\setdynamicdetails{price}{788}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{12.0\textquotesingle~×~40.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{76574}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.630366,-97.431709}{30.630366, -97.431709}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Taylor, North facing, located at W/S of Hwy 95, .17miles S/o FM 1331., N/F
+
+\chapter{TX-38784}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-uek9na-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{512,400}
+\setdynamicdetails{price}{1,972}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{10.0\textquotesingle~×~32.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78628}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.6371752,-97.79733573}{30.6371752, -97.79733573}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Georgetown, East facing, located at N/S of SH 29, 25ft W/O Cross Creek Rd., E/F
+
+\chapter{TX-38450}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-h8p4zd-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{288,400}
+\setdynamicdetails{price}{592}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{10.5\textquotesingle~×~32.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78615}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.46449,-97.46761149}{30.46449, -97.46761149}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Coupland, West facing, located at W/S of FM 973, 1.2 miles S/o FM 1660., W/F
+
+\chapter{TX-38478}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-cy922r-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{285,600}
+\setdynamicdetails{price}{1,183}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{12.0\textquotesingle~×~40.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78640}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.01795268,-97.7157198}{30.01795268, -97.7157198}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Kyle, West facing, located at S/S of Hwy 21, 150 feet W/o CR 211., W/F
+
+\chapter{TX-38472}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-mpa8nv-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{238,000}
+\setdynamicdetails{price}{985}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{10.5\textquotesingle~×~32.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78640}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.02863321,-97.75463809}{30.02863321, -97.75463809}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Niederwald, East facing, located at N/S of FM 2001, W/o Hwy 21., E/F
+
+\chapter{TX-38466}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-e58fm2-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{204,400}
+\setdynamicdetails{price}{788}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{10.0\textquotesingle~×~40.0\textquotesingle}
+\setdynamicdetails{market}{AUSTIN}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{78747}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=30.08906827,-97.71230285}{30.08906827, -97.71230285}
+}
+\setdynamiccontents*{poi}{}
+
+Board in the city of Austin, West facing, located at 6310 FM 1327, W/F
+
+\chapter{TX-01369}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-z2n9c9-1151x659-b32ec4cc.png}}
+}
+
+\setdynamicdetails{impressions}{1,317,824}
+\setdynamicdetails{price}{11,143}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{31010303}
+\setdynamicdetails{zip}{76011}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.760496,-97.078966}{32.760496, -97.078966}
+}
+\setdynamiccontents*{poi}{}
+
+Located on I-30 in Arlingtonâ€™s Entertainment District on Six Flags Hurricane Harbor Property, near Globe Life Park, AT\&T Stadium, Six Flags Over Texas, Convenon Center, mass retail, theaters, and more. This section of I-30 is stacked wtih mass amounts of slow traffic.
+
+\chapter{TX-05247}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-rbpnuv-1280x848-b85a1805.png}}
+}
+
+\setdynamicdetails{impressions}{1,088,916}
+\setdynamicdetails{price}{4,285}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{30770992}
+\setdynamicdetails{zip}{76108}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.77348,-97.47437}{32.77348, -97.47437}
+}
+\setdynamiccontents*{poi}{}
+
+Great location on busy West Loop 820 just south of Lake Worth and north of IH 30 West
+
+\chapter{TX-17598}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-nsyrzn-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{907,132}
+\setdynamicdetails{price}{4,285}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{30858768}
+\setdynamicdetails{zip}{75065}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=33.12096,-97.03274}{33.12096, -97.03274}
+}
+\setdynamiccontents*{poi}{}
+
+Located on Super Busy IH 35 East just before Lake Lewisville
+
+\chapter{TX-10576}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-5hrxyc-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{859,148}
+\setdynamicdetails{price}{11,143}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{31010249}
+\setdynamicdetails{zip}{76011}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.759039,-97.071925}{32.759039, -97.071925}
+}
+\setdynamiccontents*{poi}{}
+
+Located on I-30 in Arlingtonâ€™s Entertainment District on Six Flags Hurricane Harbor Property, near Globe Life Park, AT\&T Stadium, Six Flags Over Texas, Convenon Center, mass retail, theaters, and more. This section of I-30 is stacked wtih mass amounts of slow traffic.
+
+\chapter{TX-03515}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-eb6fbn-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{850,892}
+\setdynamicdetails{price}{4,285}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{30771222}
+\setdynamicdetails{zip}{76108}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.73867,-97.46185}{32.73867, -97.46185}
+}
+\setdynamiccontents*{poi}{}
+
+DIGITAL Face on busy IH 30 West Freeway on the west side of Ft. Worth traveling Westbound.
+
+\chapter{TX-14374}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-v4ym6n-1000x663-709cb6aa.png}}
+}
+
+\setdynamicdetails{impressions}{679,748}
+\setdynamicdetails{price}{4,285}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{14.0\textquotesingle~×~48.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{30771148}
+\setdynamicdetails{zip}{76108}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.74857,-97.4796}{32.74857, -97.4796}
+}
+\setdynamiccontents*{poi}{}
+
+DIGITAL Face on busy West Loop 820 just n/o IH 30 traveling Northbound s/o White Settlement Rd.
+
+\chapter{TX-00315}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-989bkt-1720x1204-0ecf085e.png}}
+}
+
+\setdynamicdetails{impressions}{560,844}
+\setdynamicdetails{price}{2,572}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{10.0\textquotesingle~×~30.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{30997145}
+\setdynamicdetails{zip}{75070}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=33.2278,-96.6326}{33.2278, -96.6326}
+}
+\setdynamiccontents*{poi}{}
+
+The only digital billboard in McKinney, TX
+
+\chapter{TX-09641}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-9hyuku-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{224,996}
+\setdynamicdetails{price}{1,715}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{10.6\textquotesingle~×~36.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{30770890}
+\setdynamicdetails{zip}{76028}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.49849,-97.36662}{32.49849, -97.36662}
+}
+\setdynamiccontents*{poi}{}
+
+Wilshire Blvd in Fast Growing Burleson
+
+\chapter{TX-11356}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-u69ynh-950x661-9a64e03d.png}}
+}
+
+\setdynamicdetails{impressions}{201,888}
+\setdynamicdetails{price}{1,715}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{10.6\textquotesingle~×~36.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{30770889}
+\setdynamicdetails{zip}{76028}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.49849,-97.36662}{32.49849, -97.36662}
+}
+\setdynamiccontents*{poi}{}
+
+Wilshire Blvd in Fast Growing Burleson
+
+\chapter{TX-21058}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-e69s2u-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{188,440}
+\setdynamicdetails{price}{1,543}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{11.0\textquotesingle~×~22.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Left}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{76135}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.82303,-97.47364}{32.82303, -97.47364}
+}
+\setdynamiccontents*{poi}{}
+
+8501 Jacksboro Hwy, Lakeside, TX 76135
+
+\chapter{TX-21059}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-pbpkmp-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{188,440}
+\setdynamicdetails{price}{1,543}
+\setdynamicdetails{type}{Bulletin (Digital)}
+\setdynamicdetails{size}{11.0\textquotesingle~×~22.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{NA}
+\setdynamicdetails{zip}{76135}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=32.82303,-97.47364}{32.82303, -97.47364}
+}
+\setdynamiccontents*{poi}{}
+
+8501 Jacksboro Hwy, Lakeside, TX 76135
+
+\chapter{TX-16870}
+
+\setdynamiccontents*{photo}{
+    \fcolorbox{white}{white}{
+        \centering
+        \adjincludegraphics[width=0.75\textwidth,min height=0.62\textheight,keepaspectratio,
+            Clip={(\width-0.745\textwidth)/2} {(\height-0.62\textheight)/2} ]{SignPhoto-s5w83v-resized.jpg}}
+}
+
+\setdynamicdetails{impressions}{3,136,000}
+\setdynamicdetails{price}{8,023}
+\setdynamicdetails{type}{Bulletin (Static)}
+\setdynamicdetails{size}{12.0\textquotesingle~×~40.0\textquotesingle}
+\setdynamicdetails{market}{DALLAS-\\FORT~WORTH}
+\setdynamicdetails{read}{Right}
+\setdynamicdetails{geopath_id}{31002645}
+\setdynamicdetails{zip}{75023}
+
+\setdynamiccontents*{latlon}{
+    \href{https://www.google.com/maps/search/?api=1\&query=33.047,-96.7}{33.047, -96.7}
+}
+\setdynamiccontents*{poi}{}
+
+Static Billboard
+
+
+\label{lastpage}
+\end{document}
